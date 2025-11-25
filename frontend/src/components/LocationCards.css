@@ -83,7 +83,33 @@
   font-size: 18px;
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .location-cards-container {
+    margin: 24px 0;
+  }
+
+  .location-cards {
+    gap: 16px;
+    padding: 16px 0;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+  .location-cards-container {
+    margin: 20px 0;
+  }
+
+  .location-cards-wrapper {
+    overflow-x: scroll;
+  }
+
+  .location-cards {
+    gap: 14px;
+    padding: 14px 0;
+  }
+
   .scroll-button {
     width: 40px;
     height: 40px;
@@ -96,6 +122,18 @@
   
   .scroll-right {
     right: 5px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .location-cards-container {
+    margin: 16px 0;
+  }
+
+  .location-cards {
+    gap: 12px;
+    padding: 12px 0;
   }
 }
 

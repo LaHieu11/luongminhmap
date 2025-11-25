@@ -77,10 +77,52 @@
   transform: scale(0.98);
 }
 
+/* Tablet */
+@media (max-width: 1024px) {
+  .location-card {
+    min-width: 300px;
+    max-width: 300px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .location-card {
-    min-width: 280px;
-    max-width: 280px;
+    min-width: 260px;
+    max-width: 260px;
+  }
+
+  .card-image-container {
+    height: 180px;
+  }
+
+  .card-content {
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .card-address {
+    font-size: 0.85rem;
+  }
+
+  .card-button {
+    font-size: 13px;
+    padding: 9px 16px;
+  }
+}
+
+/* Very small devices */
+@media (max-width: 480px) {
+  .location-card {
+    min-width: 240px;
+    max-width: 240px;
+  }
+
+  .card-image-container {
+    height: 170px;
   }
 }
 
