@@ -10,6 +10,8 @@
 
 ## Cài đặt và chạy dự án
 
+Ở root không còn thư mục `api/` riêng lẻ nữa – toàn bộ mã nguồn được gói gọn trong hai thư mục chính `backend/` và `frontend/`.
+
 ### Backend
 
 1. Di chuyển vào thư mục backend:
@@ -56,6 +58,14 @@ npm start
 ```
 
 Ứng dụng sẽ mở tại `http://localhost:3000`
+
+### Triển khai trên Vercel
+
+- Vercel đọc file cấu hình `vercel.json` ở root để build hai phần:
+  - `backend/server.js` được deploy bằng runtime `@vercel/node` và phục vụ tất cả request `/api/*`.
+  - `frontend/package.json` được build bằng `npm run build`, output tại `frontend/build` rồi phát hành như static site.
+- Lệnh cài đặt trong Vercel (`installCommand`) sẽ tự động chạy `npm install` cho cả `backend` và `frontend`, nên không còn phụ thuộc nào trong thư mục `api/`.
+- Sau khi deploy, frontend gọi API bằng đường dẫn tương đối `/api`, vì vậy không cần sửa `REACT_APP_API_URL`.
 
 ## Tính năng
 
