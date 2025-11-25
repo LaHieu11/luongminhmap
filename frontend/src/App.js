@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './App.css';
 import Header from './components/Header';
@@ -22,10 +22,6 @@ function App() {
     fetchCategories();
   }, []);
 
-  useEffect(() => {
-    fetchLocations();
-  }, [selectedCategory, searchTerm]);
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get(`${API_URL}/categories`);
@@ -35,7 +31,7 @@ function App() {
     }
   };
 
-  const fetchLocations = async () => {
+  const fetchLocations = useCallback(async () => {
     setLoading(true);
     try {
       const params = {};
@@ -52,7 +48,11 @@ function App() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedCategory, searchTerm]);
+
+  useEffect(() => {
+    fetchLocations();
+  }, [fetchLocations]);
 
   return (
     <div className="App">
