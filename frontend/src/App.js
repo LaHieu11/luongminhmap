@@ -7,7 +7,9 @@ import SearchBar from './components/SearchBar';
 import LocationCards from './components/LocationCards';
 import Footer from './components/Footer';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Auto-detect API URL: use relative path when deployed, localhost when developing
+const API_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api');
 
 function App() {
   const [locations, setLocations] = useState([]);
