@@ -1,0 +1,12 @@
+{
+  "name": "luongminhmap",
+  "version": "1.0.0",
+  "description": "Bản đồ địa điểm Lương Minh",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
+
