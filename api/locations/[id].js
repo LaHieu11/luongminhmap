@@ -1,16 +1,12 @@
+// Serverless function for /api/locations/:id
+// Import from backend MVC structure
 const cors = require('cors')({ origin: true });
-const locations = require('../locations');
+const locationController = require('../../backend/controllers/locationController');
 
 module.exports = (req, res) => {
   cors(req, res, () => {
-    const { id } = req.query;
-    const location = locations.find(loc => loc.id === parseInt(id));
-    
-    if (!location) {
-      return res.status(404).json({ message: 'Location not found' });
-    }
-    
-    res.status(200).json(location);
+    // Vercel passes id as req.query.id for dynamic routes
+    req.params = { id: req.query.id };
+    locationController.getLocationById(req, res);
   });
 };
-

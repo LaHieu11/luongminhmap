@@ -1,20 +1,13 @@
 {
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/build",
-  "installCommand": "cd frontend && npm install && cd ../api && npm install",
+  "installCommand": "cd frontend && npm install && cd ../backend && npm install",
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
-    {
-      "source": "/api/categories",
-      "destination": "/api/categories"
-    },
-    {
-      "source": "/api/locations",
-      "destination": "/api/locations"
-    },
-    {
-      "source": "/api/locations/:id",
-      "destination": "/api/locations/[id]"
-    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

@@ -1,15 +1,4 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Sample data for locations
-// Lưu ý: Để sử dụng ảnh local, đặt ảnh vào thư mục frontend/public/images/
-// và đặt tên file theo format: location-[id].jpg (ví dụ: location-1.jpg)
-// Nếu không có ảnh local, sẽ sử dụng ảnh mặc định từ URL
+// Model chứa dữ liệu địa điểm
 const locations = [
   {
     id: 1,
@@ -18,7 +7,7 @@ const locations = [
     category: "Du lịch",
     image: "/images/hieuladeptrai.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=400",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Di+tích+lịch+sử+Đồn+Đen,+Chu+Văn+An,+Lương+Minh,+Quảng+Ninh"
+    googleMapsUrl: "https://maps.app.goo.gl/ikhH3GyxMA6iKBSP6"
   },
   {
     id: 2,
@@ -112,47 +101,38 @@ const locations = [
   }
 ];
 
-// Get all locations
-app.get('/api/locations', (req, res) => {
-  const { category, search } = req.query;
-  
-  let filteredLocations = [...locations];
-  
-  // Filter by category
-  if (category && category !== 'Tất cả') {
-    filteredLocations = filteredLocations.filter(
-      loc => loc.category === category
-    );
+class Location {
+  static getAll() {
+    return locations;
   }
-  
-  // Filter by search term
-  if (search) {
-    const searchLower = search.toLowerCase();
-    filteredLocations = filteredLocations.filter(
+
+  static getById(id) {
+    return locations.find(loc => loc.id === parseInt(id));
+  }
+
+  static filterByCategory(category) {
+    if (!category || category === 'Tất cả') {
+      return locations;
+    }
+    return locations.filter(loc => loc.category === category);
+  }
+
+  static search(searchTerm) {
+    if (!searchTerm) {
+      return locations;
+    }
+    const searchLower = searchTerm.toLowerCase();
+    return locations.filter(
       loc => 
         loc.name.toLowerCase().includes(searchLower) ||
         loc.address.toLowerCase().includes(searchLower)
     );
   }
-  
-  res.json(filteredLocations);
-});
 
-// Get all categories
-app.get('/api/categories', (req, res) => {
-  const categories = ['Tất cả', ...new Set(locations.map(loc => loc.category))];
-  res.json(categories);
-});
-
-// Get location by ID
-app.get('/api/locations/:id', (req, res) => {
-  const location = locations.find(loc => loc.id === parseInt(req.params.id));
-  if (!location) {
-    return res.status(404).json({ message: 'Location not found' });
+  static getCategories() {
+    return ['Tất cả', ...new Set(locations.map(loc => loc.category))];
   }
-  res.json(location);
-});
+}
 
-// Export handler for Vercel
-module.exports = app;
+module.exports = Location;
 

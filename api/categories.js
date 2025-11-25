@@ -1,10 +1,10 @@
+// Serverless function for /api/categories
+// Import from backend MVC structure
 const cors = require('cors')({ origin: true });
-const locations = require('./locations');
+const categoryController = require('../backend/controllers/categoryController');
 
 module.exports = (req, res) => {
   cors(req, res, () => {
-    const categories = ['Tất cả', ...new Set(locations.map(loc => loc.category))];
-    res.status(200).json(categories);
+    categoryController.getAllCategories(req, res);
   });
 };
-
