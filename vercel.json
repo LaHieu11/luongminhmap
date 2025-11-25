@@ -1,8 +1,20 @@
 {
   "buildCommand": "cd frontend && npm install && npm run build",
   "outputDirectory": "frontend/build",
-  "installCommand": "cd frontend && npm install",
+  "installCommand": "cd frontend && npm install && cd ../api && npm install",
   "rewrites": [
+    {
+      "source": "/api/categories",
+      "destination": "/api/categories"
+    },
+    {
+      "source": "/api/locations",
+      "destination": "/api/locations"
+    },
+    {
+      "source": "/api/locations/:id",
+      "destination": "/api/locations/[id]"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"

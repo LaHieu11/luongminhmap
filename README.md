@@ -23,14 +23,18 @@ npm install
 ```
 
 3. Chạy server:
+
+**Chế độ Production (không tự động reload):**
 ```bash
 npm start
 ```
 
-Hoặc chạy với nodemon (tự động restart khi có thay đổi):
+**Chế độ Development (tự động reload khi có thay đổi - KHUYẾN NGHỊ):**
 ```bash
 npm run dev
 ```
+
+> 💡 **Lưu ý**: Sử dụng `npm run dev` để server tự động restart khi bạn thay đổi code. Không cần phải dừng và chạy lại server mỗi lần chỉnh sửa!
 
 Server sẽ chạy tại `http://localhost:5000`
 
