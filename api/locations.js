@@ -1,3 +1,4 @@
+// Shared locations data for serverless functions
 const locations = [
   {
     id: 1,
@@ -6,7 +7,7 @@ const locations = [
     category: "Du lịch",
     image: "/images/hieuladeptrai.jpg",
     fallbackImage: "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?w=400",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Di+tích+lịch+sử+Đồn+Đen,+Chu+Văn+An,+Lương+Minh,+Quảng+Ninh"
+    googleMapsUrl: "https://maps.app.goo.gl/ikhH3GyxMA6iKBSP6"
   },
   {
     id: 2,
@@ -101,4 +102,3 @@ const locations = [
 ];
 
 module.exports = locations;
-
