@@ -9,6 +9,17 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Support Vercel rewrites so Express still sees the original path
+const VERCEL_REWRITE_PARAM = '__VERCEL_REWRITE';
+app.use((req, res, next) => {
+  const rewriteTarget = req.query && req.query[VERCEL_REWRITE_PARAM];
+  if (rewriteTarget) {
+    req.url = rewriteTarget;
+    delete req.query[VERCEL_REWRITE_PARAM];
+  }
+  next();
+});
+
 // Routes
 const locationRoutes = require('./routes/locationRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');

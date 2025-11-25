@@ -16,7 +16,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/backend/server.js"
+      "dest": "/backend/server.js?__VERCEL_REWRITE=/api/$1"
     },
     {
       "handle": "filesystem"
