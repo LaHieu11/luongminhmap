@@ -6,15 +6,28 @@ const LocationCard = ({ location }) => {
     window.open(location.googleMapsUrl, '_blank', 'noopener,noreferrer');
   };
 
+  // Sử dụng ảnh local nếu có, nếu không thì dùng fallbackImage hoặc placeholder
+  const getImageSrc = () => {
+    if (location.image && location.image.startsWith('/images/')) {
+      return location.image;
+    }
+    return location.fallbackImage || location.image || 'https://via.placeholder.com/400x250?text=No+Image';
+  };
+
   return (
     <div className="location-card">
       <div className="card-image-container">
         <img
-          src={location.image}
+          src={getImageSrc()}
           alt={location.name}
           className="card-image"
           onError={(e) => {
-            e.target.src = 'https://via.placeholder.com/400x250?text=No+Image';
+            // Nếu ảnh local không tải được, thử fallbackImage
+            if (location.fallbackImage && e.target.src !== location.fallbackImage) {
+              e.target.src = location.fallbackImage;
+            } else {
+              e.target.src = 'https://via.placeholder.com/400x250?text=No+Image';
+            }
           }}
         />
       </div>

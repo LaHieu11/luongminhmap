@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import Header from './components/Header';
 import Banner from './components/Banner';
 import SearchBar from './components/SearchBar';
 import LocationCards from './components/LocationCards';
+import Footer from './components/Footer';
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
@@ -52,6 +54,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <Banner />
       <div className="main-content">
         <SearchBar
@@ -63,6 +66,7 @@ function App() {
         />
         <LocationCards locations={locations} loading={loading} />
       </div>
+      <Footer />
     </div>
   );
 }
