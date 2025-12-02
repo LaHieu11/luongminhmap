@@ -7,7 +7,18 @@ const { authenticate, isAdmin } = require('../middleware/auth');
 router.get('/', locationController.getAllLocations);
 
 // GET /api/locations/:id - Lấy địa điểm theo ID (public)
-router.get('/:id', locationController.getLocationById);
+// Note: This route must come after the '/' route to avoid conflicts
+router.get('/:id', (req, res, next) => {
+  // Log for debugging
+  console.log('Location route matched:', {
+    method: req.method,
+    url: req.url,
+    path: req.path,
+    params: req.params,
+    originalUrl: req.originalUrl
+  });
+  next();
+}, locationController.getLocationById);
 
 // POST /api/locations - Tạo địa điểm mới (Admin only)
 router.post('/', authenticate, isAdmin, locationController.createLocation);

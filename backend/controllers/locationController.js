@@ -41,12 +41,24 @@ const getAllLocations = (req, res) => {
 const getLocationById = (req, res) => {
   try {
     const { id } = req.params;
+    
+    // Log for debugging
+    console.log('getLocationById called:', {
+      id: id,
+      params: req.params,
+      url: req.url,
+      path: req.path,
+      originalUrl: req.originalUrl
+    });
+    
     const location = Location.getById(id);
     
     if (!location) {
+      console.log('Location not found for id:', id);
       return res.status(404).json({ message: 'Location not found' });
     }
     
+    console.log('Location found:', location.id, location.name);
     res.status(200).json(location);
   } catch (error) {
     console.error('Error in getLocationById:', error);

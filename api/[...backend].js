@@ -3,8 +3,14 @@
 
 const app = require('../backend/server');
 
-// Express app is already a (req, res) handler, so we can export it directly
 module.exports = (req, res) => {
+  // Vercel catch-all route: [...backend] captures everything after /api/
+  // So req.url will be like "/api/locations/1" or "/api/locations"
+  // Express routes are mounted at /api/locations, so they expect paths like "/1" or "/"
+  // But since we're using catch-all, the full path is preserved
+  
+  // The Express app should handle the full path correctly
+  // because routes are mounted at /api/locations, /api/categories, etc.
   return app(req, res);
 };
 
