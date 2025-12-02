@@ -1,0 +1,76 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import Header from '../components/Header';
+import Banner from '../components/Banner';
+import SearchBar from '../components/SearchBar';
+import LocationCards from '../components/LocationCards';
+import Footer from '../components/Footer';
+
+// Auto-detect API URL
+const API_URL = process.env.REACT_APP_API_URL || 
+  (process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5000/api');
+
+function Home() {
+  const [locations, setLocations] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('Tất cả');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/categories`);
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+    }
+  };
+
+  const fetchLocations = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = {};
+      if (selectedCategory !== 'Tất cả') {
+        params.category = selectedCategory;
+      }
+      if (searchTerm) {
+        params.search = searchTerm;
+      }
+      const response = await axios.get(`${API_URL}/locations`, { params });
+      setLocations(response.data);
+    } catch (error) {
+      console.error('Error fetching locations:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedCategory, searchTerm]);
+
+  useEffect(() => {
+    fetchLocations();
+  }, [fetchLocations]);
+
+  return (
+    <div className="App">
+      <Header />
+      <Banner />
+      <div className="main-content">
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+        <LocationCards locations={locations} loading={loading} />
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+export default Home;
+
