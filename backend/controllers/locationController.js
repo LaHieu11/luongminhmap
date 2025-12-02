@@ -59,8 +59,104 @@ const getLocationById = (req, res) => {
   }
 };
 
+// Create location (Admin only)
+const createLocation = (req, res) => {
+  try {
+    const locationData = req.body;
+    
+    // Validation
+    if (!locationData.name || !locationData.address || !locationData.category) {
+      return res.status(400).json({ 
+        error: { 
+          code: '400', 
+          message: 'Name, address, and category are required' 
+        } 
+      });
+    }
+
+    const newLocation = Location.create(locationData);
+    res.status(201).json({
+      message: 'Location created successfully',
+      location: newLocation
+    });
+  } catch (error) {
+    console.error('Error in createLocation:', error);
+    res.status(500).json({ 
+      error: { 
+        code: '500', 
+        message: error.message || 'A server error has occurred' 
+      } 
+    });
+  }
+};
+
+// Update location (Admin only)
+const updateLocation = (req, res) => {
+  try {
+    const { id } = req.params;
+    const locationData = req.body;
+    
+    const updatedLocation = Location.update(id, locationData);
+    
+    if (!updatedLocation) {
+      return res.status(404).json({ 
+        error: { 
+          code: '404', 
+          message: 'Location not found' 
+        } 
+      });
+    }
+
+    res.status(200).json({
+      message: 'Location updated successfully',
+      location: updatedLocation
+    });
+  } catch (error) {
+    console.error('Error in updateLocation:', error);
+    res.status(500).json({ 
+      error: { 
+        code: '500', 
+        message: error.message || 'A server error has occurred' 
+      } 
+    });
+  }
+};
+
+// Delete location (Admin only)
+const deleteLocation = (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const deleted = Location.delete(id);
+    
+    if (!deleted) {
+      return res.status(404).json({ 
+        error: { 
+          code: '404', 
+          message: 'Location not found' 
+        } 
+      });
+    }
+
+    res.status(200).json({
+      message: 'Location deleted successfully'
+    });
+  } catch (error) {
+    console.error('Error in deleteLocation:', error);
+    res.status(500).json({ 
+      error: { 
+        code: '500', 
+        message: error.message || 'A server error has occurred' 
+      } 
+    });
+  }
+};
+
 module.exports = {
   getAllLocations,
-  getLocationById
+  getLocationById,
+  createLocation,
+  updateLocation,
+  deleteLocation
 };
 
